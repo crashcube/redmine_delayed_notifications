@@ -16,6 +16,9 @@ module Zeed
 
     def issue_edit(journal, to_users, cc_users, instant = false)
 
+      to_users = issue.notified_users unless to_users
+      cc_users = issue.notified_watchers - to unless cc_users
+
       if journal.kind_of?(Array)
         journals = journal
 
