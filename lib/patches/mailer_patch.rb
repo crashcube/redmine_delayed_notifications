@@ -15,14 +15,6 @@ module Zeed
 
     def issue_edit_with_delay(journal, to_users = nil, cc_users = nil)
 
-      if to_users.kind_of?(Array)
-        instant = false
-      else
-        instant == true
-        to_users = issue.notified_users
-        cc_users = issue.notified_watchers - to_users
-      end
-
       if journal.kind_of?(Array)
         journals = journal
 
@@ -34,6 +26,15 @@ module Zeed
       end
 
       issue = journal.journalized
+
+      if to_users.kind_of?(Array)
+        instant = false
+      else
+        instant == true
+        to_users = issue.notified_users
+        cc_users = issue.notified_watchers - to_users
+      end
+
       redmine_headers 'Project' => issue.project.identifier,
                       'Issue-Id' => issue.id,
                       'Issue-Author' => issue.author.login
