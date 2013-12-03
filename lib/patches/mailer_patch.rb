@@ -15,7 +15,7 @@ module Zeed
 
     def issue_edit_with_delay(journal, to_users, cc_users)
 
-      if to_users.kind_of(Array)
+      if to_users.kind_of?(Array)
         instant = false
       else
         instant == true
