@@ -15,12 +15,12 @@ module Zeed
 
     def issue_edit_with_delay(journal, to_users, cc_users)
 
-      if to_users.is_a(TrueClass) && to_users == true
+      if to_users.kind_of(Array)
+        instant = false
+      else
         instant == true
         to_users = issue.notified_users
-        cc_users = issue.notified_watchers - to
-      else
-        instant = false
+        cc_users = issue.notified_watchers - to_users
       end
 
       if journal.kind_of?(Array)
