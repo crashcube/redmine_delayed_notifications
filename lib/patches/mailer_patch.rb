@@ -30,7 +30,7 @@ module Zeed
       if to_users.kind_of?(Array)
         instant = false
       else
-        instant == true
+        instant = true
         to_users = issue.notified_users
         cc_users = issue.notified_watchers - to_users
       end
