@@ -6,3 +6,5 @@ Redmine::Plugin.register :redmine_delayed_notifications do
   url 'http://zennex.ru'
   author_url 'http://alouds.ru'
 end
+
+require 'patches/mailer_patch'
