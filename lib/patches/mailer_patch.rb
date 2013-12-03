@@ -13,7 +13,7 @@ module Zeed
 
   module InstanceMethods
 
-    def issue_edit_with_delay(journal, to_users, cc_users)
+    def issue_edit_with_delay(journal, to_users = nil, cc_users = nil)
 
       if to_users.kind_of?(Array)
         instant = false
