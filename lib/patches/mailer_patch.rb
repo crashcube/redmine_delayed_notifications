@@ -15,7 +15,7 @@ module Zeed
 
     def issue_edit_with_delay(journal, to_users, cc_users)
 
-      if to_users.is_a(Boolean) && to_users == true
+      if to_users.is_a(TrueClass) && to_users == true
         instant == true
         to_users = issue.notified_users
         cc_users = issue.notified_watchers - to
@@ -70,10 +70,7 @@ module Zeed
     def wiki_content_updated_with_delay(wiki_content, instant = false)
 
       if wiki_content.kind_of?(Array)
-        wiki_contents = wiki_content
         wiki_content = wiki_content.last
-      else
-        wiki_contents = nil
       end
 
       redmine_headers 'Project' => wiki_content.project.identifier,
