@@ -16,7 +16,7 @@ module Zeed
 
     def issue_edit(journal, to_users, cc_users)
 
-      if (to_users == true)
+      if to_users.is_a(Boolean) && to_users == true
         instant == true
         to_users = issue.notified_users
         cc_users = issue.notified_watchers - to
