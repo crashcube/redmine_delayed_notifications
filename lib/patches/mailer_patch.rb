@@ -5,16 +5,15 @@ module Zeed
       base.class_eval do
         unloadable
 
-        alias_method_chain :issue_edit, :send_mail_control
-        alias_method_chain :issue_add, :send_mail_control
-        alias_method_chain :wiki_content_updated, :send_mail_control
+        alias_method_chain :issue_edit, :delay
+        alias_method_chain :wiki_content_updated, :delay
       end
     end
   end
 
   module InstanceMethods
 
-    def issue_edit(journal, to_users, cc_users)
+    def issue_edit_with_delay(journal, to_users, cc_users)
 
       if to_users.is_a(Boolean) && to_users == true
         instant == true
@@ -68,7 +67,7 @@ module Zeed
            :subject => s
     end
 
-    def wiki_content_updated(wiki_content, instant = false)
+    def wiki_content_updated_with_delay(wiki_content, instant = false)
 
       if wiki_content.kind_of?(Array)
         wiki_contents = wiki_content
