@@ -14,10 +14,15 @@ module Zeed
 
   module InstanceMethods
 
-    def issue_edit(journal, to_users, cc_users, instant = false)
+    def issue_edit(journal, to_users, cc_users)
 
-      to_users = issue.notified_users unless to_users
-      cc_users = issue.notified_watchers - to unless cc_users
+      if (to_users == true)
+        instant == true
+        to_users = issue.notified_users
+        cc_users = issue.notified_watchers - to
+      else
+        instant = false
+      end
 
       if journal.kind_of?(Array)
         journals = journal
