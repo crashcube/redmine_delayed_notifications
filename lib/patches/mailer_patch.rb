@@ -59,13 +59,28 @@ module Zeed
             :param_model => wiki_content.class.name
         )
 
-        wiki_content.recipients = []
-        wiki_content.page.wiki.watcher_recipients = []
-        wiki_content.page.watcher_recipients = []
+        recipients = []
+        cc = []
       end
 
-      wiki_content_updated_without_delay(wiki_content)
+      # initial function
 
+      redmine_headers 'Project' => wiki_content.project.identifier,
+                      'Wiki-Page-Id' => wiki_content.page.id
+      @author = wiki_content.author
+      message_id wiki_content
+      recipients = wiki_content.recipients
+      cc = wiki_content.page.wiki.watcher_recipients + wiki_content.page.watcher_recipients - recipients
+      @wiki_content = wiki_content
+      @wiki_content_url = url_for(:controller => 'wiki', :action => 'show',
+                                  :project_id => wiki_content.project,
+                                  :id => wiki_content.page.title)
+      @wiki_diff_url = url_for(:controller => 'wiki', :action => 'diff',
+                               :project_id => wiki_content.project, :id => wiki_content.page.title,
+                               :version => wiki_content.version)
+      mail :to => recipients,
+           :cc => cc,
+           :subject => "[#{wiki_content.project.name}] #{l(:mail_subject_wiki_content_updated, :id => wiki_content.page.pretty_title)}"
     end
 
   end
