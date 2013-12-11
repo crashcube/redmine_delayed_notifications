@@ -51,20 +51,6 @@ module Zeed
         wiki_content = wiki_content.last
       end
 
-      unless instant
-        Notification.create(
-            :action => 'wiki_content_updated',
-            :entity_id => wiki_content.page.id,
-            :param_id => wiki_content.id,
-            :param_model => wiki_content.class.name
-        )
-
-        recipients = []
-        cc = []
-      end
-
-      # initial function
-
       redmine_headers 'Project' => wiki_content.project.identifier,
                       'Wiki-Page-Id' => wiki_content.page.id
       @author = wiki_content.author
@@ -78,6 +64,19 @@ module Zeed
       @wiki_diff_url = url_for(:controller => 'wiki', :action => 'diff',
                                :project_id => wiki_content.project, :id => wiki_content.page.title,
                                :version => wiki_content.version)
+
+      unless instant
+        Notification.create(
+            :action => 'wiki_content_updated',
+            :entity_id => wiki_content.page.id,
+            :param_id => wiki_content.id,
+            :param_model => wiki_content.class.name
+        )
+
+        recipients = []
+        cc = []
+      end
+
       mail :to => recipients,
            :cc => cc,
            :subject => "[#{wiki_content.project.name}] #{l(:mail_subject_wiki_content_updated, :id => wiki_content.page.pretty_title)}"
