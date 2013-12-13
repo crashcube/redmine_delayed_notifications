@@ -25,6 +25,8 @@ module Zeed
         end
       end
 
+      issue = journal.journalized
+
       if to_users.kind_of?(Array)
         Notification.create(
             :action => 'issue_edit',
@@ -36,7 +38,6 @@ module Zeed
         to_users = []
         cc_users = []
       else
-        issue = journal.journalized
         to_users = issue.notified_users
         cc_users = issue.notified_watchers - to_users
       end
