@@ -1,3 +1,4 @@
-= redmine_delayed_notifications
+= Redmine Delayed Notifications Plugin
 
-Description goes here
+Possibility to send batch of notifications.
+
